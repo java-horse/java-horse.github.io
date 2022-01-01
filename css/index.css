@@ -3490,47 +3490,44 @@ li.categoryBar-list-item:nth-child(3) {
   background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_three.jpg');
 }
 li.categoryBar-list-item:nth-child(4) {
-  background: url('https://cdn.jsdelivr.net/npm/akilar-candyassets/image/cover5.webp');
+  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_four.jpg');
 }
 li.categoryBar-list-item:nth-child(5) {
-  background: #abcdef;
+  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_five.jpg');
 }
 li.categoryBar-list-item:nth-child(6) {
-  background: rgba(45,67,89,0.7);
+  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_six.jpg');
 }
 li.categoryBar-list-item:nth-child(7) {
+  background: #abcdef;
+}
+li.categoryBar-list-item:nth-child(8) {
+  background: rgba(45,67,89,0.7);
+}
+li.categoryBar-list-item:nth-child(9) {
   background: -webkit-linear-gradient(rgba(0, 0, 0, 0.4) 25%, rgba(200,16 , 16, 0) 100%);
   background: -moz-linear-gradient(rgba(0, 0, 0, 0.4) 25%, rgba(200,16 , 16, 0) 100%);
   background: -o-linear-gradient(rgba(0, 0, 0, 0.4) 25%, rgba(200,16 , 16, 0) 100%);
   background: -ms-linear-gradient(rgba(0, 0, 0, 0.4) 25%, rgba(200,16 , 16, 0) 100%);
   background: linear-gradient(rgba(0, 0, 0, 0.4) 25%, rgba(200,16 , 16, 0) 100%);
 }
-li.categoryBar-list-item:nth-child(8) {
-  background: url('https://cdn.jsdelivr.net/npm/akilar-candyassets/image/cover5.webp');
-}
-li.categoryBar-list-item:nth-child(9) {
-  background: url('https://cdn.jsdelivr.net/npm/akilar-candyassets/image/cover6.webp');
-}
-li.categoryBar-list-item:nth-child(10) {
-  background: url('https://cdn.jsdelivr.net/npm/akilar-candyassets/image/cover6.webp');
-}
 li.categoryBar-list-item:nth-child(1)>span::after {
-  content: 'Good things to share' !important;
+  content: 'Linux server' !important;
 }
 li.categoryBar-list-item:nth-child(2)>span::after {
-  content: 'Back end talk' !important;
+  content: 'Development tools' !important;
 }
 li.categoryBar-list-item:nth-child(3)>span::after {
-  content: 'personal diary' !important;
+  content: 'Life essays' !important;
 }
 li.categoryBar-list-item:nth-child(4)>span::after {
-  content: 'Front end serialization' !important;
+  content: 'Technological frontier' !important;
 }
 li.categoryBar-list-item:nth-child(5)>span::after {
-  content: 'Butterfly theme' !important;
+  content: 'Third party payment' !important;
 }
 li.categoryBar-list-item:nth-child(6)>span::after {
-  content: 'Other items' !important;
+  content: 'Resource storage' !important;
 }
 li.categoryBar-list-item {
   width: 32.3% !important;
