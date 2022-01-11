@@ -56,7 +56,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2022-01-10 22:29:31 22:29:31'
+  postUpdate: '2022-01-11 21:29:56 21:29:56'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -185,7 +185,101 @@ document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/j
 
   }
 }
-window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="507156271" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="list" data-preload="none" data-listmaxheight="500px" data-autoplay="true" muted></div><script type="text/javascript" async src="//at.alicdn.com/t/font_2264842_3izu8i5eoc2.js"></script><script type="text/javascript" async src="https://mabin.horsemuzi.top/hexo_butterfly_custom.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.17.0/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'data-lazy-src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://bq4woh9n.api.lncldglobal.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": 'bQ4WOh9nLzdSelTv7WAr0qkR-MdYXbMMI',
+        "X-LC-Key": '1BhG0hlMhBPufdRJrab3mvxK',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=10&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 10/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="507156271" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="list" data-preload="none" data-listmaxheight="500px" data-autoplay="true" muted></div><script type="text/javascript" async src="//at.alicdn.com/t/font_2264842_3izu8i5eoc2.js"></script><script type="text/javascript" async src="https://mabin.horsemuzi.top/hexo_butterfly_custom.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
 POWERMODE.shake = false;
 POWERMODE.mobile = true;
 document.body.addEventListener('input', POWERMODE);
@@ -330,7 +424,7 @@ document.addEventListener('pjax:error', (e) => {
   </script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script data-pjax src="https://unpkg.zhimg.com/hexo-butterfly-clock/lib/clock.min.js"></script><script data-pjax>
   function butterfly_swiper_injector_config(){
     var parent_div_git = document.getElementById('recent-posts');
-    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/Interceptor拦截器和Filter过滤器基操/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover42.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-05-07</span><a class="blog-slider__title" href="JAVA/Interceptor拦截器和Filter过滤器基操/" alt="">Interceptor拦截器和Filter过滤器基操</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/Interceptor拦截器和Filter过滤器基操/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/Nacos配置中心规则/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover15.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-05-07</span><a class="blog-slider__title" href="JAVA/Nacos配置中心规则/" alt="">Nacos注册配置中心</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/Nacos配置中心规则/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/SpringBoot整合Email发送/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover32.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-05-24</span><a class="blog-slider__title" href="JAVA/SpringBoot整合Email发送/" alt="">SpringBoot整合Email发送</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/SpringBoot整合Email发送/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/SpringBoot整合EasyExcel/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover88.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-05-04</span><a class="blog-slider__title" href="JAVA/SpringBoot整合EasyExcel/" alt="">SpringBoot整合EasyExcel</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/SpringBoot整合EasyExcel/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/SpringBoot整合支付宝沙箱支付/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover46.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-06-19</span><a class="blog-slider__title" href="JAVA/SpringBoot整合支付宝沙箱支付/" alt="">SpringBoot整合支付宝沙箱支付</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/SpringBoot整合支付宝沙箱支付/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/SpringBoot小杂记/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover71.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-05-20</span><a class="blog-slider__title" href="JAVA/SpringBoot小杂记/" alt="">SpringBoot小杂记</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/SpringBoot小杂记/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/Java8集合数据去重示例/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover12.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-07-05</span><a class="blog-slider__title" href="JAVA/Java8集合数据去重示例/" alt="">Java8集合数据去重示例</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/Java8集合数据去重示例/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/Interceptor拦截器和Filter过滤器基操/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover32.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-05-07</span><a class="blog-slider__title" href="JAVA/Interceptor拦截器和Filter过滤器基操/" alt="">Interceptor拦截器和Filter过滤器基操</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/Interceptor拦截器和Filter过滤器基操/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/Nacos配置中心规则/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover52.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-05-07</span><a class="blog-slider__title" href="JAVA/Nacos配置中心规则/" alt="">Nacos注册配置中心</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/Nacos配置中心规则/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/SpringBoot整合Email发送/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover30.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-05-24</span><a class="blog-slider__title" href="JAVA/SpringBoot整合Email发送/" alt="">SpringBoot整合Email发送</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/SpringBoot整合Email发送/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/SpringBoot整合EasyExcel/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover74.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-05-04</span><a class="blog-slider__title" href="JAVA/SpringBoot整合EasyExcel/" alt="">SpringBoot整合EasyExcel</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/SpringBoot整合EasyExcel/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/SpringBoot整合支付宝沙箱支付/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover96.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-06-19</span><a class="blog-slider__title" href="JAVA/SpringBoot整合支付宝沙箱支付/" alt="">SpringBoot整合支付宝沙箱支付</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/SpringBoot整合支付宝沙箱支付/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/SpringBoot小杂记/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover88.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-05-20</span><a class="blog-slider__title" href="JAVA/SpringBoot小杂记/" alt="">SpringBoot小杂记</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/SpringBoot小杂记/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="JAVA/Java8集合数据去重示例/" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover82.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2021-07-05</span><a class="blog-slider__title" href="JAVA/Java8集合数据去重示例/" alt="">Java8集合数据去重示例</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="JAVA/Java8集合数据去重示例/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
     console.log('已挂载butterfly_swiper')
     parent_div_git.insertAdjacentHTML("afterbegin",item_html)
     }
