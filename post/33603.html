@@ -1,0 +1,550 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>亚虎大百货服务环境搭建 | 小马博客</title><meta name="keywords" content="Linux"><meta name="author" content="Mr.Horse"><meta name="copyright" content="Mr.Horse"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="亚虎大百货服务环境搭建环境需求 运行服务需要的系统环境如下：      服务 版本（版本可不一致，兼容即可）     Centos 7.x   Jdk 1.8   Nginx 1.12.x   Redis 4.x   Mysql 5.7.x   MongoDB 4.x   Docker 18.x   rabbitMQ 3.7.x management（具有可视化面板版本）   Tomcat 9.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="亚虎大百货服务环境搭建">
+<meta property="og:url" content="https://www.horsemuzi.top/post/33603.html">
+<meta property="og:site_name" content="小马博客">
+<meta property="og:description" content="亚虎大百货服务环境搭建环境需求 运行服务需要的系统环境如下：      服务 版本（版本可不一致，兼容即可）     Centos 7.x   Jdk 1.8   Nginx 1.12.x   Redis 4.x   Mysql 5.7.x   MongoDB 4.x   Docker 18.x   rabbitMQ 3.7.x management（具有可视化面板版本）   Tomcat 9.0">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover25.jpg">
+<meta property="article:published_time" content="2021-07-26T13:39:54.000Z">
+<meta property="article:modified_time" content="2022-01-15T14:11:43.803Z">
+<meta property="article:author" content="Mr.Horse">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover25.jpg"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/favicon.ico"><link rel="canonical" href="https://www.horsemuzi.top/post/33603"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":2,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":500},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":500,"languages":{"author":"作者: Mr.Horse","link":"链接: ","source":"来源: 小马博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '亚虎大百货服务环境搭建',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-15 22:11:43 22:11:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="//at.alicdn.com/t/font_2467717_jlvw8717b8.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/butterfly/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-clock/lib/clock.min.css" /><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script async src="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/avatar.gif" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">68</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">58</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-journal-whills"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/photo/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></li><li><a class="site-page child" href="/video/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-headphones-alt"></i><span> 歌曲</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/mirrors/"><i class="fa-fw fas fa-radiation-alt"></i><span> 镜像源</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-secret"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/cover25.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">小马博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-journal-whills"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/photo/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></li><li><a class="site-page child" href="/video/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-headphones-alt"></i><span> 歌曲</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/mirrors/"><i class="fa-fw fas fa-radiation-alt"></i><span> 镜像源</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-secret"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">亚虎大百货服务环境搭建</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-26T13:39:54.000Z" title="发表于 2021-07-26 21:39:54 21:39:54">2021-07-26 21:39:54</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-15T14:11:43.803Z" title="更新于 2022-01-15 22:11:43 22:11:43">2022-01-15 22:11:43</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2/">服务部署</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">7.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>31分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="亚虎大百货服务环境搭建"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="亚虎大百货服务环境搭建"><a href="#亚虎大百货服务环境搭建" class="headerlink" title="亚虎大百货服务环境搭建"></a>亚虎大百货服务环境搭建</h1><h2 id="环境需求"><a href="#环境需求" class="headerlink" title="环境需求"></a>环境需求</h2><blockquote>
+<p>运行服务需要的系统环境如下：</p>
+</blockquote>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>版本（版本可不一致，兼容即可）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Centos</td>
+<td>7.x</td>
+</tr>
+<tr>
+<td>Jdk</td>
+<td>1.8</td>
+</tr>
+<tr>
+<td>Nginx</td>
+<td>1.12.x</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>4.x</td>
+</tr>
+<tr>
+<td>Mysql</td>
+<td>5.7.x</td>
+</tr>
+<tr>
+<td>MongoDB</td>
+<td>4.x</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>18.x</td>
+</tr>
+<tr>
+<td>rabbitMQ</td>
+<td>3.7.x management（具有可视化面板版本）</td>
+</tr>
+<tr>
+<td>Tomcat</td>
+<td>9.0.x（war包运行服务，本次环境暂未配置）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Redis搭建"><a href="#Redis搭建" class="headerlink" title="Redis搭建"></a>Redis搭建</h2><h3 id="安装要求"><a href="#安装要求" class="headerlink" title="安装要求"></a>安装要求</h3><blockquote>
+<p>参考文档：<a href="https://www.horsemuzi.top/Linux/Linux安装Redis 6.2.1/">Linux 安装 Redis</a></p>
+<p>要求：</p>
+<ul>
+<li>端口：16379</li>
+<li>安装方式：源码安装</li>
+<li>自行测试<code>redis-cli</code>客户端是否正常</li>
+</ul>
+</blockquote>
+<h3 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h3><h4 id="下载解压"><a href="#下载解压" class="headerlink" title="下载解压"></a>下载解压</h4><blockquote>
+<ol>
+<li>到Redis官网下载最新稳定版：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://redis.io/download">Reids官网</a> </li>
+<li>上传到<code>/usr/local/redis/</code>目录下并解压</li>
+</ol>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@horse redis]<span class="comment"># tar -zxvf redis-6.2.1.tar.gz </span></span><br><span class="line">[root@horse redis]<span class="comment"># ll</span></span><br><span class="line">total 2388</span><br><span class="line">drwxrwxr-x 9 root root    4096 Apr 19 10:18 redis-6.2.1</span><br><span class="line">-rw-r--r-- 1 root root 2438367 Apr 19 09:14 redis-6.2.1.tar.gz</span><br></pre></td></tr></tbody></table></figure>
+<p>解压后的文件在<code>/usr/local/redis/redis-6.2.1</code>目录下</p>
+<h4 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h4><blockquote>
+<p>进入<code>/usr/local/redis/redis-6.2.1</code>目录，执行编译。编译后会出现<code>redis.conf</code>文件和<code>src</code>目录。</p>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@horse redis-6.2.1]<span class="comment"># make</span></span><br></pre></td></tr></tbody></table></figure>
+<blockquote>
+<p>编译成功，进入<code>src</code>目录下，执行<code>make install</code>进行Redis安装。</p>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@horse src]<span class="comment"># make install</span></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="部署启动"><a href="#部署启动" class="headerlink" title="部署启动"></a>部署启动</h4><blockquote>
+<p><strong>为了方便管理</strong>，将Redis文件中的conf配置文件和常用命令移动到统一文件中。</p>
+<ul>
+<li>创建<code>bin</code>和<code>etc</code>目录。</li>
+<li>将<code>redis.conf</code>文件移动到<code>etc</code>目录下。</li>
+<li>进入<code>src</code>目录将其他常用命令移动到<code>bin</code>目录下。</li>
+</ul>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir etc</span><br><span class="line">mkdir bin</span><br><span class="line"></span><br><span class="line">mv redis.conf /usr/<span class="built_in">local</span>/redis/redis-6.2.1/etc/</span><br><span class="line"></span><br><span class="line">mv mkreleasehdr.sh redis-benchmark redis-check-aof redis-check-rdb redis-cli redis-server /usr/<span class="built_in">local</span>/redis/redis-6.2.1/bin/</span><br></pre></td></tr></tbody></table></figure>
+<p>查看移动后的文件</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@horse redis-6.2.1]<span class="comment"># cd etc</span></span><br><span class="line">[root@horse etc]<span class="comment"># ll</span></span><br><span class="line">total 92</span><br><span class="line">-rw-rw-r-- 1 root root 92484 Apr 19 13:55 redis.conf</span><br><span class="line">[root@horse etc]<span class="comment"># cd ../bin</span></span><br><span class="line">[root@horse bin]<span class="comment"># ll</span></span><br><span class="line">total 37316</span><br><span class="line">-rw-r--r-- 1 root root     113 Apr 21 18:59 dump.rdb</span><br><span class="line">-rwxrwxr-x 1 root root     735 Mar  2 14:14 mkreleasehdr.sh</span><br><span class="line">-rwxr-xr-x 1 root root 4833448 Apr 19 09:40 redis-benchmark</span><br><span class="line">-rwxr-xr-x 1 root root 9451144 Apr 19 09:40 redis-check-aof</span><br><span class="line">-rwxr-xr-x 1 root root 9451144 Apr 19 09:40 redis-check-rdb</span><br><span class="line">-rwxr-xr-x 1 root root 5003464 Apr 19 09:40 redis-cli</span><br><span class="line">-rwxr-xr-x 1 root root 9451144 Apr 19 09:40 redis-server</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="启动测试"><a href="#启动测试" class="headerlink" title="启动测试"></a>启动测试</h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在bin目录下，执行redis-server,指定redis.conf配置文件路径</span></span><br><span class="line"></span><br><span class="line">./redis-server[root@horse bin]<span class="comment"># ./redis-server /usr/local/redis/redis-6.2.1/etc/redis.conf</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">32336:C 19 Apr 2021 14:18:01.846 <span class="comment"># oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo</span></span><br><span class="line">32336:C 19 Apr 2021 14:18:01.847 <span class="comment"># Redis version=6.2.1, bits=64, commit=00000000, modified=0, pid=32336, just started</span></span><br><span class="line">32336:C 19 Apr 2021 14:18:01.847 <span class="comment"># Configuration loaded</span></span><br><span class="line">32336:M 19 Apr 2021 14:18:01.847 * monotonic clock: POSIX clock_gettime</span><br><span class="line">                _._                                                  </span><br><span class="line">           _.-``__ <span class="string">''</span>-._                                             </span><br><span class="line">      _.-``    `.  `_.  <span class="string">''</span>-._           Redis 6.2.1 (00000000/0) 64 bit</span><br><span class="line">  .-`` .-```.  ```\/    _.,_ <span class="string">''</span>-._                                   </span><br><span class="line"> (    <span class="string">'      ,       .-`  | `,    )     Running in standalone mode</span></span><br><span class="line"><span class="string"> |`-._`-...-` __...-.``-._|'</span>` _.-<span class="string">'|     Port: 6379</span></span><br><span class="line"><span class="string"> |    `-._   `._    /     _.-'</span>    |     PID: 32336</span><br><span class="line">  `-._    `-._  `-./  _.-<span class="string">'    _.-'</span>                                   </span><br><span class="line"> |`-._`-._    `-.__.-<span class="string">'    _.-'</span>_.-<span class="string">'|                                  </span></span><br><span class="line"><span class="string"> |    `-._`-._        _.-'</span>_.-<span class="string">'    |           http://redis.io        </span></span><br><span class="line"><span class="string">  `-._    `-._`-.__.-'</span>_.-<span class="string">'    _.-'</span>                                   </span><br><span class="line"> |`-._`-._    `-.__.-<span class="string">'    _.-'</span>_.-<span class="string">'|                                  </span></span><br><span class="line"><span class="string"> |    `-._`-._        _.-'</span>_.-<span class="string">'    |                                  </span></span><br><span class="line"><span class="string">  `-._    `-._`-.__.-'</span>_.-<span class="string">'    _.-'</span>                                   </span><br><span class="line">      `-._    `-.__.-<span class="string">'    _.-'</span>                                       </span><br><span class="line">          `-._        _.-<span class="string">'                                           </span></span><br><span class="line"><span class="string">              `-.__.-'</span>                                               </span><br><span class="line"></span><br><span class="line">32336:M 19 Apr 2021 14:18:01.848 <span class="comment"># WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span></span><br><span class="line">32336:M 19 Apr 2021 14:18:01.848 <span class="comment"># Server initialized</span></span><br><span class="line">32336:M 19 Apr 2021 14:18:01.848 * Loading RDB produced by version 6.2.1</span><br><span class="line">32336:M 19 Apr 2021 14:18:01.848 * RDB age 170 seconds</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="redis-conf配置"><a href="#redis-conf配置" class="headerlink" title="redis.conf配置"></a>redis.conf配置</h4><blockquote>
+<p>编辑<code>redis.conf</code>配置文件，根据服务需求配置</p>
+</blockquote>
+<ul>
+<li>注释绑定IP，允许远程连接</li>
+</ul>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># bind 127.0.0.1</span></span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>允许后台运行</li>
+</ul>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参数设置为 yes [允许后台挂载运行]</span></span><br><span class="line">daemonize yes</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>修改模式</li>
+</ul>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这个参数设置为 no [非受保护模式]</span></span><br><span class="line">protected-mode no</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>配置日志输出位置</li>
+</ul>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># reids 日志输出位置</span></span><br><span class="line">logfile <span class="string">"/usr/local/redis/redis-6.2.1/redis.log"</span></span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>设置最大内存,单位：字节【如果内存足够，默认即可】</li>
+</ul>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置redis最大占用内存：0.75G</span></span><br><span class="line">maxmemory 268435456</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>设置密码</li>
+</ul>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置redis密码</span></span><br><span class="line">requirepass redis123</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>修改端口（非必须<span class="github-emoji"><span>😄</span><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>）</li>
+</ul>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改端口</span></span><br><span class="line">port 16379</span><br></pre></td></tr></tbody></table></figure>
+<p>其他的配置，默认即可。</p>
+<h4 id="重启Reids"><a href="#重启Reids" class="headerlink" title="重启Reids"></a>重启Reids</h4><blockquote>
+<p>因为是自定义安装的原因，所以重置Redis服务的时候需要指定配置文件<code>redis.conf</code></p>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 要指定redis.conf的具体路径</span></span><br><span class="line">[root@horse bin]<span class="comment"># redis-server /usr/local/redis/redis-6.2.1/etc/redis.conf </span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="redis-cli客户端"><a href="#redis-cli客户端" class="headerlink" title="redis-cli客户端"></a>redis-cli客户端</h3><blockquote>
+<p>将<code>redis-cli</code>路径添加到PATH环境变量中，即可在任意路径下执行<code>redis-cli -a 密码 -p 端口 -h IP地址</code>命令，进入redis-cli客户端。</p>
+<p>步骤：</p>
+<ul>
+<li>打开<code>/etc/profile</code>文件，编辑路径配置</li>
+<li>刷新环境配置：<code>source /etc/profile</code></li>
+</ul>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mysql环境变量</span></span><br><span class="line"><span class="built_in">export</span> MYSQL_HOME=/usr/<span class="built_in">local</span>/mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># redis环境变量</span></span><br><span class="line"><span class="built_in">export</span> REDIS_HOME=/usr/<span class="built_in">local</span>/redis/redis-6.2.1</span><br><span class="line"></span><br><span class="line"><span class="comment"># jdk环境变量</span></span><br><span class="line"><span class="comment"># JAVA_HOME：jdk解压的文件路径</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/<span class="built_in">local</span>/jdk/jdk1.8.0_291</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=$:CLASSPATH:<span class="variable">$JAVA_HOME</span>/lib/</span><br><span class="line"><span class="comment"># 不同服务路径之间使用“:”(英文冒号)隔开</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$MYSQL_HOME</span>/bin:<span class="variable">$REDIS_HOME</span>/bin</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="redis启动脚本"><a href="#redis启动脚本" class="headerlink" title="redis启动脚本"></a>redis启动脚本</h3><blockquote>
+<p>需求：配置redis脚本，在任意路径下快捷启动、停止redis服务</p>
+</blockquote>
+<h4 id="脚本介绍"><a href="#脚本介绍" class="headerlink" title="脚本介绍"></a>脚本介绍</h4><blockquote>
+<ol>
+<li><p>在<code>/etc/init.d/</code>目录下创建脚本 文件 redis_16379</p>
+</li>
+<li><p>根据redis各个文件的路径，配置redis_16379脚本文件</p>
+</li>
+<li><p>执行脚本、</p>
+<ul>
+<li><p>开启命令：service redis_16379 start</p>
+</li>
+<li><p>关闭命令：service redis_16379 stop</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>坑点：</strong></p>
+<ul>
+<li><p>redis如果设置有密码，在脚本文件中，必须进行显式定义使用。</p>
+</li>
+<li><p>使用脚本开启，必须使用脚本关闭，否则会无法在关闭redis的时候系统自动删除<code>/var/run/redis_16379.pid</code>文件。</p>
+</li>
+<li>如果未使用脚本关闭redis服务后，只需要手动删除redis_16379.pid 文件即可再次使用脚本启动。</li>
+<li>脚本文件名称可改动，见名知义即可。</li>
+</ul>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启redis服务</span></span><br><span class="line">service redis_16379 start</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭redis服务</span></span><br><span class="line">service redis_16379 stop</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="脚本示例"><a href="#脚本示例" class="headerlink" title="脚本示例"></a>脚本示例</h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 脚本代码示例详解</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#redis服务器监听的端口</span></span><br><span class="line">REDISPORT=16379</span><br><span class="line"></span><br><span class="line"><span class="comment">#redis-server服务端所处位置</span></span><br><span class="line">EXEC=/home/yahutest/redis-4.0.6/src/redis-server</span><br><span class="line"></span><br><span class="line"><span class="comment">#redis-cli客户端位置</span></span><br><span class="line">CLIEXEC=/home/yahutest/redis-4.0.6/src/redis-cli</span><br><span class="line"></span><br><span class="line"><span class="comment">#redis的PID文件位置，默认在 /var/run/路径下会生成一个【redis_端口号.pid】文件</span></span><br><span class="line">PIDFILE=/var/run/redis_6379.pid</span><br><span class="line"></span><br><span class="line"><span class="comment">#redis.conf的配置文件位置，需将${REDISPORT}修改为文件名</span></span><br><span class="line">CONF=<span class="string">"/home/yahutest/redis-4.0.6/redis.conf"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># redis密码</span></span><br><span class="line">PWD=redis123</span><br><span class="line"></span><br><span class="line"><span class="comment"># $1: 接收外面传入的参数，start 或者 stop</span></span><br><span class="line"><span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span></span><br><span class="line">    start)</span><br><span class="line">        <span class="keyword">if</span> [ -f <span class="variable">$PIDFILE</span> ]</span><br><span class="line">        <span class="keyword">then</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">"<span class="variable">$PIDFILE</span> exists, process is already running or crashed"</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">"Starting Redis server..."</span></span><br><span class="line">                <span class="comment"># 拼接并执行redis启动命令</span></span><br><span class="line">                <span class="variable">$EXEC</span> <span class="variable">$CONF</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">"Redis start success!"</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">        ;;</span><br><span class="line">    stop)</span><br><span class="line">        <span class="keyword">if</span> [ ! -f <span class="variable">$PIDFILE</span> ]</span><br><span class="line">        <span class="keyword">then</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">"<span class="variable">$PIDFILE</span> does not exist, process is not running"</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                PID=$(cat <span class="variable">$PIDFILE</span>)</span><br><span class="line">                <span class="built_in">echo</span> <span class="string">"Stopping ..."</span></span><br><span class="line">                <span class="comment"># 执行客户端命令，关闭redis服务（如果端口号和密码有配置，这里也要重新进行指定，否则无法关闭）</span></span><br><span class="line">                <span class="variable">$CLIEXEC</span> -p <span class="variable">$REDISPORT</span> -a <span class="variable">$PWD</span> shutdown</span><br><span class="line">                <span class="keyword">while</span> [ -x /proc/<span class="variable">${PID}</span> ]</span><br><span class="line">                <span class="keyword">do</span></span><br><span class="line">                    <span class="built_in">echo</span> <span class="string">"Waiting for Redis to shutdown ..."</span></span><br><span class="line">                    sleep 1</span><br><span class="line">                <span class="keyword">done</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">"Redis stopp success!"</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Please use start or stop as first argument"</span></span><br><span class="line">        ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="MongoDB搭建"><a href="#MongoDB搭建" class="headerlink" title="MongoDB搭建"></a>MongoDB搭建</h2><h3 id="安装要求-1"><a href="#安装要求-1" class="headerlink" title="安装要求"></a>安装要求</h3><blockquote>
+<p>参考文档：</p>
+<ul>
+<li>源码安装：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/wangchengyi/articles/12094967.html?d=1625712366635">centos7部署mongodb4.0.14</a></li>
+<li>yum方式安装：<a href="https://www.horsemuzi.top/Linux/Linux安装MondoDB/">Linux 环境下安装 MongoDB 4.x</a></li>
+</ul>
+<p>要求：</p>
+<ul>
+<li>端口：27017</li>
+<li>安装方式：源码安装</li>
+<li>自行测试<code>mongo</code>客户端是否正常</li>
+</ul>
+</blockquote>
+<h3 id="安装过程-1"><a href="#安装过程-1" class="headerlink" title="安装过程"></a>安装过程</h3><h4 id="压缩包下载"><a href="#压缩包下载" class="headerlink" title="压缩包下载"></a>压缩包下载</h4><blockquote>
+<p>mongodb官网：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.mongodb.com/try/download/community">mongodb点击下载</a></p>
+<p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://i.loli.net/2021/07/08/Jrn5G71apvlPWRt.png" alt="mongodb官网"></p>
+</blockquote>
+<h4 id="解压包"><a href="#解压包" class="headerlink" title="解压包"></a>解压包</h4><blockquote>
+<p>将解压资源移动到<code>/usr/local/mongodb/</code>目录下</p>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf mongodb-linux-x86_64-4.0.14.tgz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看移动后的资源</span></span><br><span class="line">[root@localhost mongodb]<span class="comment"># ll</span></span><br><span class="line">总用量 320</span><br><span class="line">drwxr-xr-x. 2 root root   4096 7月  26 09:01 bin</span><br><span class="line">drwxr-xr-x. 3 root root   4096 7月  27 09:10 data</span><br><span class="line">drwxr-xr-x. 2 root root     49 7月  26 09:19 etc</span><br><span class="line">-rw-r--r--. 1 root root  30608 5月   3 23:08 LICENSE-Community.txt</span><br><span class="line">drwxr-xr-x. 2 root root     62 7月  26 09:19 logs</span><br><span class="line">-rw-r--r--. 1 root root  16726 5月   3 23:08 MPL-2</span><br><span class="line">-rw-r--r--. 1 root root   2581 5月   3 23:08 README</span><br><span class="line">-rw-r--r--. 1 root root  75405 5月   3 23:08 THIRD-PARTY-NOTICES</span><br><span class="line">-rw-r--r--. 1 root root 183512 5月   3 23:10 THIRD-PARTY-NOTICES.gotools</span><br><span class="line">[root@localhost mongodb]<span class="comment"># pwd</span></span><br><span class="line">/usr/<span class="built_in">local</span>/mongodb</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="创建存储路径"><a href="#创建存储路径" class="headerlink" title="创建存储路径"></a>创建存储路径</h4><blockquote>
+<p>分别创建<code>data</code>,<code>logs</code>,<code>etc</code>三个资源目录，分别放置存储数据、日志文件、配置文件</p>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir /usr/<span class="built_in">local</span>/mongodb/ data logs etc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建日志文件（在配置文件中需要用到）</span></span><br><span class="line">touch /usr/<span class="built_in">local</span>/mongodb/logs/mongodb.log</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="创建配置文件"><a href="#创建配置文件" class="headerlink" title="创建配置文件"></a>创建配置文件</h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/<span class="built_in">local</span>/mongodb/etc/mongodb.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 具体配置内容如下</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定数据库路径</span></span><br><span class="line">dbpath=/usr/<span class="built_in">local</span>/mongodb/data</span><br><span class="line"><span class="comment"># 日志文件</span></span><br><span class="line">logpath=/usr/<span class="built_in">local</span>/mongodb/logs/mongodb.log</span><br><span class="line"><span class="comment"># 端口号</span></span><br><span class="line">port=27017</span><br><span class="line"><span class="comment"># 后台运行</span></span><br><span class="line">fork=<span class="literal">true</span></span><br><span class="line"><span class="comment"># 关闭日志选项（开启的话，MongoDB的数据操作将会写入到journal文件夹的文件里）</span></span><br><span class="line">journal=<span class="literal">false</span></span><br><span class="line"><span class="comment"># 绑定服务IP，若绑定127.0.0.1，则只能本机访问；若绑定0.0.0.0，则所有人都可以访问</span></span><br><span class="line">bind_ip=0.0.0.0</span><br><span class="line"><span class="comment"># 开启用户认证</span></span><br><span class="line">auth=<span class="literal">true</span></span><br><span class="line"><span class="comment"># 过滤无用日志信息</span></span><br><span class="line">quiet=<span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="comment"># mongodb config</span></span><br><span class="line"><span class="built_in">export</span> MONGODB_HOME=/usr/<span class="built_in">local</span>/mongodb</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$MONGODB_HOME</span>/bin</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="启动mongodb"><a href="#启动mongodb" class="headerlink" title="启动mongodb"></a>启动mongodb</h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定配置文件并启动服务</span></span><br><span class="line">/usr/<span class="built_in">local</span>/mongodb/bin/mongod -f ../etc/mongodb.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看进程</span></span><br><span class="line">[root@localhost mongodb]<span class="comment"># ps -ef | grep mongod</span></span><br><span class="line">root      23088      1  0 7月26 ?       00:03:16 ./mongod -f ../etc/mongodb.conf</span><br><span class="line">root      36048  35049  0 09:20 pts/3    00:00:00 grep --color=auto mongod</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="账户角色配置"><a href="#账户角色配置" class="headerlink" title="账户角色配置"></a>账户角色配置</h3><blockquote>
+<p>配置信息如下：</p>
+<ul>
+<li>数据库：dbh</li>
+<li>用户：dbhUser，权限： readWrite（读写权限）</li>
+<li>密码：mongo123</li>
+</ul>
+<p><strong>坑点：</strong></p>
+<ul>
+<li>进入mongo客户端中，在同一个会话中不能进行两次 db.auth() 授权验证操作，否则会报错。只需要退出重新进入即可解决。例如：在指定完 use admin 和相应的授权命令db.auth()后，就不能在执行 use dbh 和 db.auth()命令，必须退出重新进入才行。</li>
+</ul>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># z在mongo安装bin目录下进入客户端</span></span><br><span class="line">[root@yhgateway bin]<span class="comment"># ./mongo</span></span><br><span class="line">MongoDB shell version v4.2.14</span><br><span class="line">connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&amp;gssapiServiceName=mongodb</span><br><span class="line">Implicit session: session { <span class="string">"id"</span> : UUID(<span class="string">"aa0f3746-0477-40be-bf31-b758d960cdee"</span>) }</span><br><span class="line">MongoDB server version: 4.2.14</span><br><span class="line"><span class="comment"># 切换数据库,如果没有此数据库，则进行创建</span></span><br><span class="line">&gt; use dbh</span><br><span class="line">switched to dbh</span><br><span class="line"><span class="comment"># 创建针对某个数据库的用户、角色、权限等</span></span><br><span class="line">&gt; db.createUser({user:<span class="string">"dbhUser"</span>,<span class="built_in">pwd</span>:<span class="string">"mongo123"</span>,roles:[{role:<span class="string">"readWrite"</span>,db:<span class="string">"dbh"</span>}]})</span><br></pre></td></tr></tbody></table></figure>
+<p>测试配置</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换数据库</span></span><br><span class="line">&gt; use dbh</span><br><span class="line">switched to db dbh</span><br><span class="line"><span class="comment"># 进行授权验证</span></span><br><span class="line">&gt; db.auth(<span class="string">"dbhUser"</span>,<span class="string">"mongo123"</span>)</span><br><span class="line">1</span><br><span class="line"><span class="comment"># 执行查询</span></span><br><span class="line">&gt; db.dbh.find().pretty();</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="mongo客户端"><a href="#mongo客户端" class="headerlink" title="mongo客户端"></a>mongo客户端</h3><blockquote>
+<p>将<code>mongo</code>的文件路径，添加到环境变量中，即可在任意目录下执行<code>mongo ip:port</code>命令，连接指定端口号的客户端</p>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># redis configuration</span></span><br><span class="line"><span class="built_in">export</span> REDIS_HOME=/home/yahutest/redis-4.0.6</span><br><span class="line"></span><br><span class="line"><span class="comment"># mongodb configuration</span></span><br><span class="line"><span class="built_in">export</span> MONGO_HOME=/home/yahutest/mongodb-linux-x86_64-rhel70-4.2.14</span><br><span class="line"></span><br><span class="line"><span class="comment"># JDK Configuration</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/<span class="built_in">local</span>/java/jdk1.8.0_144</span><br><span class="line"><span class="built_in">export</span> JRE_HOME=/usr/<span class="built_in">local</span>/java/jdk1.8.0_144/jre</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$JRE_HOME</span>/lib:<span class="variable">$CLASSPATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># config        </span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$REDIS_HOME</span>/src:<span class="variable">$MONGO_HOME</span>/bin</span><br></pre></td></tr></tbody></table></figure>
+<p>连接测试</p>
+<blockquote>
+<p>注意：当前系统中已经开启端口为 <code>27017</code>的mongo服务</p>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定连接27017端口客户端 （连接成功）</span></span><br><span class="line">[root@yhgateway ~]<span class="comment"># mongo localhost:27017</span></span><br><span class="line">MongoDB shell version v4.2.14</span><br><span class="line">connecting to: mongodb://localhost:27017/<span class="built_in">test</span>?compressors=disabled&amp;gssapiServiceName=mongodb</span><br><span class="line">Implicit session: session { <span class="string">"id"</span> : UUID(<span class="string">"094b3a80-c369-4840-b3b2-ca4bb60edecd"</span>) }</span><br><span class="line">MongoDB server version: 4.2.14</span><br><span class="line">&gt; use dbh</span><br><span class="line">switched to db dbh</span><br><span class="line">&gt; db.auth(<span class="string">"dbhUser"</span>,<span class="string">"mongo123"</span>)</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定连接3717端口客户端 （无此端口服务，无法连接）</span></span><br><span class="line">[root@yhgateway ~]<span class="comment"># mongo localhost:3717</span></span><br><span class="line">MongoDB shell version v4.2.14</span><br><span class="line">connecting to: mongodb://localhost:3717/<span class="built_in">test</span>?compressors=disabled&amp;gssapiServiceName=mongodb</span><br><span class="line">2021-07-08T14:29:20.199+0800 E  QUERY    [js] Error: couldn<span class="string">'t connect to server localhost:3717, connection attempt failed: SocketException: Error connecting to localhost:3717 (127.0.0.1:3717) :: caused by :: Connection refused :</span></span><br><span class="line"><span class="string">connect@src/mongo/shell/mongo.js:353:17</span></span><br><span class="line"><span class="string">@(connect):2:6</span></span><br><span class="line"><span class="string">2021-07-08T14:29:20.200+0800 F  -        [main] exception: connect failed</span></span><br><span class="line"><span class="string">2021-07-08T14:29:20.200+0800 E  -        [main] exiting with code 1</span></span><br><span class="line"><span class="string">[root@yhgateway ~]# </span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="mongo启动脚本"><a href="#mongo启动脚本" class="headerlink" title="mongo启动脚本"></a>mongo启动脚本</h3><blockquote>
+<p>步骤：</p>
+<ol>
+<li>在<code>/etc/init.d/</code>目录下创建mongod文件并编辑</li>
+<li>修改文件权限：<code>chmod 755 mongod</code></li>
+<li>指定命令：<ol>
+<li>开启服务：<code>systemctl start mongod</code></li>
+<li>重启服务：<code>systemctl restart mongod</code></li>
+<li>关闭服务：<code>systemctl stop mongod</code></li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<p>脚本示例</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># mongod文件绝对路径</span></span><br><span class="line">MONGOD=/home/yahutest/mongodb-linux-x86_64-rhel70-4.2.14/bin/mongod</span><br><span class="line"></span><br><span class="line"><span class="comment"># mongodb.conf文件绝对路径</span></span><br><span class="line">CONF=/home/yahutest/mongodb/etc/mongodb.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义开启服务</span></span><br><span class="line"><span class="function"><span class="title">start</span></span>(){</span><br><span class="line">    <span class="variable">$MONGOD</span> --config <span class="variable">$CONF</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义关闭服务</span></span><br><span class="line"><span class="function"><span class="title">stop</span></span>(){</span><br><span class="line">    <span class="variable">$MONGOD</span> --config <span class="variable">$CONF</span> --shutdown</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据执行脚本传入的 参数$1 执行</span></span><br><span class="line"><span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span></span><br><span class="line"> start)</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"starting mongodb server..."</span></span><br><span class="line">  start</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"mongodb start success!"</span></span><br><span class="line"> ;;</span><br><span class="line"></span><br><span class="line">stop)</span><br><span class="line">  stop</span><br><span class="line"> ;;</span><br><span class="line"></span><br><span class="line">restart)</span><br><span class="line">  stop</span><br><span class="line">  start</span><br><span class="line">  ;;</span><br><span class="line"></span><br><span class="line">  *)</span><br><span class="line">  <span class="built_in">echo</span></span><br><span class="line"> $<span class="string">"Please use start or restart or stop as first argument"</span></span><br><span class="line">   <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>修改文件权限</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置为可执行文件</span></span><br><span class="line">chmod 755 mongod</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="数据迁移"><a href="#数据迁移" class="headerlink" title="数据迁移"></a>数据迁移</h3><blockquote>
+<p>方式一：使用mongo自带的<code>mongoexport</code>和<code>mongoimport</code>命令进行数据迁移，原理：先导出集合数据，在导入到mongo数据库中。</p>
+<p>方式二：使用<code>mongodump</code>和<code>mongorestore</code>命令进行数据备份和恢复，原理：先备份数据到指定位置，再从指定位置恢复数据</p>
+<p>注意：mongodb需要添加到<code>PATH环境变量</code>中</p>
+<p>区别：</p>
+<ul>
+<li>mongodump 比 mongoexport 的速度稍快（使用时没怎么感觉到）</li>
+<li>mongodump 可以backup整个数据库或者也可以针对每个collection操作，而mongoexport只能对每个collection进行操作</li>
+<li>mongoexport 输出的JSON比mongodump 的BSON可读性更高</li>
+</ul>
+<p>推荐使用：<code>mongoexport</code>和<code>mongoimport</code>进行数据迁移</p>
+</blockquote>
+<h4 id="数据导出"><a href="#数据导出" class="headerlink" title="数据导出"></a>数据导出</h4><h5 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h5><blockquote>
+<p>导出命令：<code>mongoexport</code></p>
+<p>参数说明：</p>
+<ul>
+<li>-h, —host ：代表远程连接的数据库地址，默认连接本地Mongo数据库；</li>
+<li>—port：代表远程连接的数据库的端口，默认连接的远程端口27017；</li>
+<li>-u,—username：代表连接远程数据库的账号，如果设置数据库的认证，需要指定用户账号；</li>
+<li>-p,—password：代表连接数据库的账号对应的密码；</li>
+<li>-d,—db：代表连接的数据库；</li>
+<li>-c,—collection：代表连接数据库中的集合；</li>
+<li>-f, —fields：代表集合中的字段，可以根据设置选择导出的字段；</li>
+<li>—type：代表导出输出的文件类型，包括csv和json文件；</li>
+<li>-o, —out：代表导出的文件名；</li>
+<li>-q, —query：代表查询条件；</li>
+<li>—skip：跳过指定数量的数据；</li>
+<li>—limit：读取指定数量的数据记录；</li>
+<li>—sort：对数据进行排序，可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式，其中 1 为升序排列，而-1是用于降序排列,如sort({KEY:1})。</li>
+</ul>
+</blockquote>
+<h5 id="命令示例"><a href="#命令示例" class="headerlink" title="命令示例"></a>命令示例</h5><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导出 admin 库中 fs.files 集合中的数据到 /tmp/files.json 文件中</span></span><br><span class="line">mongoexport -h localhost:27017 -u root -p mongo123 -d admin -c fs.files -o /tmp/files.json --<span class="built_in">type</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导出 admin 库中 fs.chunks 集合数据到 /tmp/chunks.json 文件中</span></span><br><span class="line">mongoexport -h localhost:27017 -u root -p mongo123 -d admin -c fs.chunks -o /tmp/chunks.json --<span class="built_in">type</span> json</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="数据导入"><a href="#数据导入" class="headerlink" title="数据导入"></a>数据导入</h4><h5 id="参数说明-1"><a href="#参数说明-1" class="headerlink" title="参数说明"></a>参数说明</h5><blockquote>
+<p>导入命令：<code>mongoimport</code></p>
+<p>参数说明：</p>
+<ul>
+<li>h,—host ：代表远程连接的数据库地址，默认连接本地Mongo数据库；</li>
+<li>—port：代表远程连接的数据库的端口，默认连接的远程端口27017；</li>
+<li>-u,—username：代表连接远程数据库的账号，如果设置数据库的认证，需要指定用户账号；</li>
+<li>-p,—password：代表连接数据库的账号对应的密码；</li>
+<li>-d,—db：代表连接的数据库；</li>
+<li>-c,—collection：代表连接数据库中的集合；</li>
+<li>-f, —fields：代表导入集合中的字段；</li>
+<li>—type：代表导入的文件类型，包括csv和json,tsv文件，默认json格式；</li>
+<li>—file：导入的文件名称</li>
+<li>—headerline：导入csv文件时，指明第一行是列名，不需要导入；</li>
+</ul>
+</blockquote>
+<h5 id="命令示例-1"><a href="#命令示例-1" class="headerlink" title="命令示例"></a>命令示例</h5><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入 /tmp/files.json 文件导入 admin 库的 fs.files 集合中</span></span><br><span class="line"></span><br><span class="line">mongoimport -h localhost:27017 -u root -p mongo123 -d admin -c fs.files --file /tmp/files.json --<span class="built_in">type</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入 /tmp/chunks.json 文件导入 admin 库的 fs.chunks 集合中</span></span><br><span class="line"></span><br><span class="line">mongoimport -h localhost:27017 -u root -p mongo123 -d admin -c fs.chunks --file /tmp/chunks.json --<span class="built_in">type</span> json</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="数据备份恢复"><a href="#数据备份恢复" class="headerlink" title="数据备份恢复"></a>数据备份恢复</h4><h5 id="数据备份"><a href="#数据备份" class="headerlink" title="数据备份"></a>数据备份</h5><h6 id="参数示例"><a href="#参数示例" class="headerlink" title="参数示例"></a>参数示例</h6><blockquote>
+<p>备份命令：<code>mongodump</code></p>
+<p>参数说明：</p>
+<ul>
+<li>—host <hostname>&lt;:port&gt;, -h <hostname>&lt;:port&gt;  # 指定备份的主机ip和端口号，默认值localhost:27017 </hostname></hostname></li>
+<li>—port # 指定端口号 默认27017 </li>
+<li>—username <username>, -u <username> # 指定用户名 </username></username></li>
+<li>—password <password>, -p <password> # 指定密码 </password></password></li>
+<li>—authenticationDatabase <dbname> # 指定认证的数据库 </dbname></li>
+<li>—authenticationMechanism <name> # 指定认证的算法 ，默认值 SCRAM-SHA-1 </name></li>
+<li>—db <database>, -d <database> # 指定备份的数据库，未指定的话，备份所有的数据库，但不包含local库 </database></database></li>
+<li>—collection <collection>, -c <collection> # 指定备份的集合，未指定则备份指定库中的所有集合。 </collection></collection></li>
+<li>—query <json>, -q <json>  # 指定 json 作为查询条件。来备份我们过滤后的数据。 —queryFile <path>  # 指定 json 文档路径，以该文档的内容作为查询条件，来备份我们过滤后的数据。 </path></json></json></li>
+<li>—quit # 通过抑制 MongoDB的复制，连接等活动，来实现备份。 </li>
+<li>—gzip  # 开启压缩，3.2版本后可以使用，输出为文件的话会带有后缀.gz </li>
+<li>—out <path>, -o <path>  # 输出的目录路径（如果指定集合的备份，默认会输出的目录格式：当前目录/数据库名/集合名.bson）</path></path></li>
+</ul>
+</blockquote>
+<h6 id="命令示例-2"><a href="#命令示例-2" class="headerlink" title="命令示例"></a>命令示例</h6><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 导出 admin 数据库的 fs.files 集合数据到 /tmp/ 目录下</span></span><br><span class="line"></span><br><span class="line">mongodump -h 121.5.168.31:27017 -u root -p mongo123 --authenticationDatabase admin -d admin -c fs.files -o /tmp/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 导出 admin 数据库的 fs.chunks 集合数据到 /tmp/ 目录下</span></span><br><span class="line"></span><br><span class="line">mongodump -h 121.5.168.31:27017 -u root -p mongo123 --authenticationDatabase admin -d admin -c fs.chunks -o /tmp/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> =============================查看导出文件====================================</span></span><br><span class="line">[root@horse admin]# ll</span><br><span class="line">total 3820</span><br><span class="line">-rw-r--r-- 1 root root 3896395 Jul 28 14:56 fs.chunks.bson</span><br><span class="line">-rw-r--r-- 1 root root     163 Jul 28 14:55 fs.chunks.metadata.json</span><br><span class="line">-rw-r--r-- 1 root root     399 Jul 28 14:52 fs.files.bson</span><br><span class="line">-rw-r--r-- 1 root root     162 Jul 28 14:52 fs.files.metadata.json</span><br><span class="line">[root@horse admin]# pwd</span><br><span class="line">/tmp/admin</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h5 id="数据恢复"><a href="#数据恢复" class="headerlink" title="数据恢复"></a>数据恢复</h5><h6 id="参数示例-1"><a href="#参数示例-1" class="headerlink" title="参数示例"></a>参数示例</h6><blockquote>
+<p>恢复命令：<code>mongorestore</code></p>
+<p>参数说明：</p>
+<ul>
+<li>—host <hostname>&lt;:port&gt;, -h <hostname>&lt;:port&gt;  # 指定恢复的主机ip和端口号，默认值localhost:27017 </hostname></hostname></li>
+<li>—port # 指定端口号 默认27017 </li>
+<li>—username <username>, -u <username> # 指定用户名 </username></username></li>
+<li>—password <password>, -p <password> # 指定密码 </password></password></li>
+<li>—authenticationDatabase <dbname> # 指定认证的数据库 </dbname></li>
+<li>—authenticationMechanism <name> # 指定认证的算法 ，默认值 SCRAM-SHA-1 </name></li>
+<li>—objcheck # 开启验证，验证还原操作，确保没有无效的文档插入数据库。会有较小的性能影响 </li>
+<li>—oplogReplay # 恢复备份数据并将 mongodump 执行期间的操作(记录在导出的日志)恢复。 </li>
+<li>—oplogLimit  # 指定恢复 </li>
+<li>—oplogFile # 指定 Oplog 路径 </li>
+<li>—keepIndexVersion # 阻止mongorestore在还原过程中将索引升级到最新版本。 </li>
+<li>—restoreDbUsersAndRoles # 还原指定的数据库用户和角色。 </li>
+<li>—maintainInsertionOrder # 默认值为False,如果为 True,mongorestore 将按照输入源的文档顺序插入，否则是 随机执行插入。 </li>
+<li>—numParallelCollections int, -j int # 指定并行恢复的集合数。 </li>
+<li>—numInsertionWorkersPerCollection int # 默认值为 1，指定每个集合恢复的并发数，大数据量导入增加该值可提高 恢复速度。 </li>
+<li>—gzip # 从压缩文档中 恢复。 </li>
+<li>—archive # 从归档文件中恢复。 </li>
+<li>—dir # 指定还原数据储存目录。</li>
+</ul>
+</blockquote>
+<h6 id="命令示例-3"><a href="#命令示例-3" class="headerlink" title="命令示例"></a>命令示例</h6><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 恢复 /tmp/admin/*.bson 文件到 admin 数据库 中的对应的 集合中</span></span><br><span class="line"></span><br><span class="line">mongorestore -h 121.5.168.31:27017 -u root -p mongo123 --authenticationDatabase admin -d admin -c fs.files /tmp/admin/fs.files.bson</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复 /tmp/admin/*.bson 文件到 admin 数据库 中的对应的 集合中</span></span><br><span class="line">mongorestore -h 121.5.168.31:27017 -u root -p mongo123 --authenticationDatabase admin -d admin -c fs.chunks /tmp/admin/fs.chunks.bson</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Docker搭建"><a href="#Docker搭建" class="headerlink" title="Docker搭建"></a>Docker搭建</h2><h3 id="安装要求-2"><a href="#安装要求-2" class="headerlink" title="安装要求"></a>安装要求</h3><blockquote>
+<p>参考文档：<a href="https://www.horsemuzi.top/Linux/Linux安装Docker/">Linux安装Docker</a></p>
+<p>要求：</p>
+<ul>
+<li>完成Docker安装，能够完成镜像拉取、运行的基本操作</li>
+</ul>
+</blockquote>
+<h3 id="安装过程-2"><a href="#安装过程-2" class="headerlink" title="安装过程"></a>安装过程</h3><blockquote>
+<p>本次采用<code>yum</code>在线安装Docker工具</p>
+</blockquote>
+<h4 id="安装yum工具"><a href="#安装yum工具" class="headerlink" title="安装yum工具"></a>安装yum工具</h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="添加软件源"><a href="#添加软件源" class="headerlink" title="添加软件源"></a>添加软件源</h4><blockquote>
+<p>安装软件源为：阿里云仓库，速度较快</p>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="更新yum缓存"><a href="#更新yum缓存" class="headerlink" title="更新yum缓存"></a>更新yum缓存</h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum makecache fast</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="安装Docker-ce"><a href="#安装Docker-ce" class="headerlink" title="安装Docker-ce"></a>安装Docker-ce</h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install docker-ce</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="启动Docker"><a href="#启动Docker" class="headerlink" title="启动Docker"></a>启动Docker</h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start docker</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="docker基础命令"><a href="#docker基础命令" class="headerlink" title="docker基础命令"></a>docker基础命令</h3><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示docker的版本信息</span></span><br><span class="line">docker version 或者 docker -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示docker的详细信息</span></span><br><span class="line">docker info</span><br><span class="line"></span><br><span class="line"><span class="comment"># 搜索指定镜像</span></span><br><span class="line">docker search rabbitmq</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已拉取的所有镜像</span></span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本拉取镜像（如果不添加版本信息，默认拉取最新版的镜像）</span></span><br><span class="line">docker pull rabbitmq:3.8.14-management</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#常用参数说明</span></span><br><span class="line">--name=<span class="string">"容器名字"</span>  <span class="comment">#设置启动容器的名字，例如：tomcat01,tomcat02...，用来区别容器</span></span><br><span class="line">-d  <span class="comment">#后台方式运行</span></span><br><span class="line">-it <span class="comment">#使用交互方式运行并进行容器进行交互查看信息</span></span><br><span class="line">-p  <span class="comment">#端口映射，下面是几种不同的映射书写方式（指定容器的映射端口）</span></span><br><span class="line">	1.ip:主机端口：容器端口</span><br><span class="line">	2.主机端口：容器端口（常用）</span><br><span class="line">	3.容器端口</span><br><span class="line">docker run  -d --name horse-rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.8.14-management</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前正在运行的容器</span></span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询已经运行过的容器</span></span><br><span class="line">docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入已经启动的容器内部</span></span><br><span class="line">docker <span class="built_in">exec</span> -it [容器ID] /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从主机拷贝文件到容器内部（反向拷贝也可以）</span></span><br><span class="line">docker cp 主机文件路径 容器ID:文件路径</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="RabbitMQ搭建"><a href="#RabbitMQ搭建" class="headerlink" title="RabbitMQ搭建"></a>RabbitMQ搭建</h2><h3 id="安装要求-3"><a href="#安装要求-3" class="headerlink" title="安装要求"></a>安装要求</h3><blockquote>
+<p>参考文档：<a href="https://www.horsemuzi.top/JAVA/RabbitMQ安装配置/">Linux安装RabbitMQ </a></p>
+<p>要求：</p>
+<ul>
+<li>安装带有可视化配置界面的rabbitmq版本</li>
+<li>安装rabbitmq延时插件</li>
+</ul>
+</blockquote>
+<h3 id="安装过程-3"><a href="#安装过程-3" class="headerlink" title="安装过程"></a>安装过程</h3><h4 id="拉取镜像，启动容器"><a href="#拉取镜像，启动容器" class="headerlink" title="拉取镜像，启动容器"></a>拉取镜像，启动容器</h4><blockquote>
+<p>进入Docker Hub，查找需要版本。</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://gitee.com/milubin/horse_second_images/raw/master/img/20210426204759.png" alt="Snipaste_2021-04-26_20-47-38"></p>
+<p>执行命令：</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull rabbitmq:3.8.14-management</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@horse ~]<span class="comment"># docker images</span></span><br><span class="line">REPOSITORY   TAG                 IMAGE ID       CREATED       SIZE</span><br><span class="line">rabbitmq     3.8.14-management   edd581f906b9   3 weeks ago   187MB</span><br></pre></td></tr></tbody></table></figure>
+<p>启动容器：</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name horse-rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.8.14-management</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@horse ~]<span class="comment"># docker ps</span></span><br><span class="line">CONTAINER ID   IMAGE                        COMMAND                  CREATED      STATUS      PORTS                                                                                                                                                 NAMES</span><br><span class="line">2d2dc97ed0f1   rabbitmq:3.8.14-management   <span class="string">"docker-entrypoint.s…"</span>   7 days ago   Up 2 days   4369/tcp, 5671/tcp, 0.0.0.0:5672-&gt;5672/tcp, :::5672-&gt;5672/tcp, 15671/tcp, 15691-15692/tcp, 25672/tcp, 0.0.0.0:15672-&gt;15672/tcp, :::15672-&gt;15672/tcp   horse-rabbitmq</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="可视化配置"><a href="#可视化配置" class="headerlink" title="可视化配置"></a>可视化配置</h4><blockquote>
+<p>可视化面板创建 虚拟主机、用户、交换机、队列…</p>
+</blockquote>
+<h5 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h5><p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://gitee.com/milubin/horse_second_images/raw/master/img/20210426205228.png" alt="Snipaste_2021-04-26_20-51-24"></p>
+<h5 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h5><p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://gitee.com/milubin/horse_second_images/raw/master/img/20210426205351.png" alt="image_2021-04-23_17-59-01"></p>
+<h5 id="添加虚拟主机"><a href="#添加虚拟主机" class="headerlink" title="添加虚拟主机"></a>添加虚拟主机</h5><p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://gitee.com/milubin/horse_second_images/raw/master/img/20210426205409.png" alt="image_2021-04-23_18-00-36"></p>
+<h5 id="绑定用户和虚拟主机"><a href="#绑定用户和虚拟主机" class="headerlink" title="绑定用户和虚拟主机"></a>绑定用户和虚拟主机</h5><p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://gitee.com/milubin/horse_second_images/raw/master/img/20210426205742.png" alt="Snipaste_2021-04-26_20-56-58"></p>
+<p>配置完成后，使用配置的用户和密码登录即可。</p>
+<h3 id="延时插件安装"><a href="#延时插件安装" class="headerlink" title="延时插件安装"></a>延时插件安装</h3><blockquote>
+<p>在RabbitMQ容器中安装 延时插件，项目中可以配置基于插件的延时队列</p>
+</blockquote>
+<h4 id="插件下载"><a href="#插件下载" class="headerlink" title="插件下载"></a>插件下载</h4><blockquote>
+<p><a href="[Community Plugins — RabbitMQ](https://www.rabbitmq.com/community-plugins.html">延时插件点击下载</a>)</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://i.loli.net/2021/05/27/nkYDxtPdCaSOMeW.png" alt="image-20210527175811822"></p>
+<h4 id="进入RabbitMQ容器"><a href="#进入RabbitMQ容器" class="headerlink" title="进入RabbitMQ容器"></a>进入RabbitMQ容器</h4><blockquote>
+<ul>
+<li>进入正在运行的RabbitMQ容器，查看RabbitMQ的插件列表是否已安装有<code>延时插件</code></li>
+<li>把下载的插件复制到<code>plugins</code>目录下</li>
+</ul>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@horse lib]<span class="comment"># docker ps -a</span></span><br><span class="line">CONTAINER ID   IMAGE                        COMMAND                  CREATED      STATUS      PORTS                                                                                                                                                 NAMES</span><br><span class="line">abe759d645e4   rabbitmq:3.8.14-management   <span class="string">"docker-entrypoint.s…"</span>   2 days ago   Up 2 days   4369/tcp, 5671/tcp, 0.0.0.0:5672-&gt;5672/tcp, :::5672-&gt;5672/tcp, 15671/tcp, 15691-15692/tcp, 25672/tcp, 0.0.0.0:15672-&gt;15672/tcp, :::15672-&gt;15672/tcp   horse-rabbitmq</span><br><span class="line">[root@horse lib]<span class="comment"># docker exec -it abe759d645e4 /bin/bash</span></span><br><span class="line">root@abe759d645e4:/<span class="comment"># ls</span></span><br><span class="line">bin   dev  home  lib64  mnt  plugins  root  sbin  sys  usr</span><br><span class="line">boot  etc  lib   media  opt  proc     run   srv   tmp  var</span><br><span class="line">root@abe759d645e4:/<span class="comment"># cd plugins</span></span><br><span class="line">root@abe759d645e4:/plugins<span class="comment"># ls -l</span></span><br><span class="line">total 17640</span><br><span class="line">-rw-r--r-- 1 rabbitmq rabbitmq      59 Mar  2 16:09 README</span><br><span class="line">-rw-r--r-- 1 rabbitmq rabbitmq   13408 Mar  2 16:09 accept-0.3.5.ez</span><br><span class="line">......</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="复制移动插件"><a href="#复制移动插件" class="headerlink" title="复制移动插件"></a>复制移动插件</h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 复制文件</span></span><br><span class="line">docker cp /tmp/installPackage/rabbitmq_delayed_message_exchange-3.8.0.ez abe759d645e4:/plugins/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看是否复制成功</span></span><br><span class="line">[root@horse /]<span class="comment"># docker exec -it abe759d645e4 /bin/bash</span></span><br><span class="line">root@abe759d645e4:/<span class="comment"># ls</span></span><br><span class="line">bin   dev  home  lib64  mnt  plugins  root  sbin  sys  usr</span><br><span class="line">boot  etc  lib   media  opt  proc     run   srv   tmp  var</span><br><span class="line">root@abe759d645e4:/<span class="comment"># cd plugins</span></span><br><span class="line">root@abe759d645e4:/plugins<span class="comment"># rabbitmq-plugins list</span></span><br><span class="line">Listing plugins with pattern <span class="string">".*"</span> ...</span><br><span class="line"> Configured: E = explicitly enabled; e = implicitly enabled</span><br><span class="line"> | Status: * = running on rabbit@abe759d645e4</span><br><span class="line"> |/</span><br><span class="line">[  ] rabbitmq_amqp1_0                  3.8.14</span><br><span class="line">[  ] rabbitmq_auth_mechanism_ssl       3.8.14</span><br><span class="line">[  ] rabbitmq_consistent_hash_exchange 3.8.14</span><br><span class="line"><span class="comment"># 插件已复制成功</span></span><br><span class="line">[E*] rabbitmq_delayed_message_exchange 3.8.0</span><br><span class="line">[  ] rabbitmq_event_exchange           3.8.14</span><br><span class="line">[  ] rabbitmq_federation               3.8.14</span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">root@abe759d645e4:/plugins<span class="comment"># </span></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="开启插件服务"><a href="#开启插件服务" class="headerlink" title="开启插件服务"></a>开启插件服务</h4><blockquote>
+<p>在容器中执行两个命令</p>
+</blockquote>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 执行一下，避免出错（若执行出错，继续执行开启插件命令）</span></span><br><span class="line">rabbitmq-server -detached</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用插件(需要在plugins�
