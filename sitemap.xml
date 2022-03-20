@@ -92,7 +92,7 @@
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/categories/index.html</loc>
+    <loc>https://www.horsemuzi.top/about/index.html</loc>
     
     <lastmod>2022-01-15</lastmod>
     
@@ -101,7 +101,7 @@
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/about/index.html</loc>
+    <loc>https://www.horsemuzi.top/categories/index.html</loc>
     
     <lastmod>2022-01-15</lastmod>
     
@@ -479,7 +479,7 @@
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/post/49746.html</loc>
+    <loc>https://www.horsemuzi.top/post/16549.html</loc>
     
     <lastmod>2022-01-08</lastmod>
     
@@ -488,7 +488,7 @@
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/post/16549.html</loc>
+    <loc>https://www.horsemuzi.top/post/49746.html</loc>
     
     <lastmod>2022-01-08</lastmod>
     
@@ -605,15 +605,6 @@
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/post/47578.html</loc>
-    
-    <lastmod>2022-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.horsemuzi.top/post/1039.html</loc>
     
     <lastmod>2022-01-08</lastmod>
@@ -623,7 +614,7 @@
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/post/12739.html</loc>
+    <loc>https://www.horsemuzi.top/post/47578.html</loc>
     
     <lastmod>2022-01-08</lastmod>
     
@@ -633,6 +624,15 @@
   
   <url>
     <loc>https://www.horsemuzi.top/post/18060.html</loc>
+    
+    <lastmod>2022-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.horsemuzi.top/post/12739.html</loc>
     
     <lastmod>2022-01-08</lastmod>
     
@@ -677,7 +677,7 @@
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/post/36074.html</loc>
+    <loc>https://www.horsemuzi.top/post/60013.html</loc>
     
     <lastmod>2022-01-08</lastmod>
     
@@ -686,7 +686,7 @@
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/post/60013.html</loc>
+    <loc>https://www.horsemuzi.top/post/36074.html</loc>
     
     <lastmod>2022-01-08</lastmod>
     
@@ -922,14 +922,14 @@
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/tags/Email/</loc>
+    <loc>https://www.horsemuzi.top/tags/Mybatis/</loc>
     <lastmod>2022-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/tags/Mybatis/</loc>
+    <loc>https://www.horsemuzi.top/tags/Email/</loc>
     <lastmod>2022-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -964,14 +964,14 @@
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/tags/Shiro/</loc>
+    <loc>https://www.horsemuzi.top/tags/Async/</loc>
     <lastmod>2022-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/tags/Async/</loc>
+    <loc>https://www.horsemuzi.top/tags/Shiro/</loc>
     <lastmod>2022-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1048,14 +1048,14 @@
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/tags/Vim/</loc>
+    <loc>https://www.horsemuzi.top/tags/Tomcat/</loc>
     <lastmod>2022-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.horsemuzi.top/tags/Tomcat/</loc>
+    <loc>https://www.horsemuzi.top/tags/Vim/</loc>
     <lastmod>2022-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
