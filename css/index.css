@@ -3494,22 +3494,22 @@ span.categoryBar-list-count::after {
   right: -100%;
 }
 li.categoryBar-list-item:nth-child(1) {
-  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_one.jpg');
+  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_a.jpg');
 }
 li.categoryBar-list-item:nth-child(2) {
-  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_two.jpg');
+  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_b.jpg');
 }
 li.categoryBar-list-item:nth-child(3) {
-  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_three.jpg');
+  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_c.jpg');
 }
 li.categoryBar-list-item:nth-child(4) {
-  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_four.jpg');
+  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_d.jpg');
 }
 li.categoryBar-list-item:nth-child(5) {
-  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_five.jpg');
+  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_e.jpg');
 }
 li.categoryBar-list-item:nth-child(6) {
-  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_six.jpg');
+  background: url('https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/category_cover_f.jpg');
 }
 li.categoryBar-list-item:nth-child(7) {
   background: #abcdef;
@@ -5326,7 +5326,7 @@ li.categoryBar-list-item {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 6666;
+  z-index: 3333;
   pointer-events: none;
 }
 .medium-zoom-image--opened {
