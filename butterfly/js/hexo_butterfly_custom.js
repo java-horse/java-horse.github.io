@@ -66,7 +66,7 @@ if (location.href.indexOf("link") !== -1) {
     var imgObj = document.getElementsByTagName("img");
     for (i = 0; i &lt; imgObj.length; i++) {　　
         imgObj[i].onerror = function() { 
-          this.src = "https://cdn.jsdelivr.net/gh/java-horse/java-horse.github.io/images/friend_404.gif" 
+          this.src = "https://fastly.jsdelivr.net/gh/java-horse/java-horse.github.io/images/friend_404.gif" 
         }
     }
 }
